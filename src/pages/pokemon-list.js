@@ -16,7 +16,6 @@ function PokemonList(props) {
 
 
     const getPokemons = (first) => {
-        console.log(pokemons);
         console.log('loading...');
         props.client.query({
             query: GET_POKEMONS,
@@ -36,11 +35,13 @@ function PokemonList(props) {
         }
     `;
 
+    const goToPage = (url) => props.history.push(url)
+
     return (
         <Fragment>
             PokemonList!
             {pokemons.map(pokemon =>
-                <div key={pokemon.id}>
+                <div key={pokemon.id} onClick={() => goToPage(`/pokemon/${pokemon.id}`)}>
                     #{pokemon.id} - {pokemon.name}
                 </div>
             )}
@@ -48,8 +49,8 @@ function PokemonList(props) {
     );
 }
 
-const PokemonListWrapper = () => <ApolloConsumer>
-    {client => <PokemonList client={client}></PokemonList>}
+const PokemonListWrapper = (props) => <ApolloConsumer>
+    {client => <PokemonList {...props} client={client}></PokemonList>}
 </ApolloConsumer>
 
 export default PokemonListWrapper;
