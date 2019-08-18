@@ -7,16 +7,23 @@ import PokemonDetail from './pages/pokemon-detail';
 
 // 3rd lib
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+
+const client = new ApolloClient({
+  uri: 'https://graphql-pokemon.now.sh/',
+});
 
 function App() {
   return (
     <div className="App">
-      
-      <Router>
+      <ApolloProvider client={client}>
+        <Router>
           <Route exact path="/" component={PokemonList} />
           <Route exact path="/pokemon" component={PokemonList} />
           <Route path="/pokemon/:id" component={PokemonDetail} />
-      </Router>
+        </Router>
+      </ApolloProvider>
     </div>
   );
 }
