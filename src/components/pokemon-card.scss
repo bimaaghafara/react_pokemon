@@ -1,0 +1,36 @@
+.pokemon-wrapper {
+    &:hover {
+        opacity: 0.9;
+        border: 4px solid grey;
+        border-radius: 10px;
+    }
+    cursor: pointer;
+    height: 300px;
+    border-radius: 8px;
+    border: 2px solid rgba(30, 30, 30, 0.2);
+  
+    .img-wrapper {
+        border: 10px solid transparent;
+        background-color: #fff;
+        border-radius: 6px 6px 0 0;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 65%;
+    }
+
+    .description {
+        padding: 16px;
+        height: 35%;
+        border-radius: 0 0 6px 6px;
+        background-color: grey;
+        color: #fff;
+        .name {
+            font-size: 22px;
+        }
+        .name, .types {
+            padding: 2px;
+        }
+    }
+  }

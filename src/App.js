@@ -1,5 +1,8 @@
 import React from 'react';
+
+// styles
 import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // pages
 import PokemonList from './pages/pokemon-list';

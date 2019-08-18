@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // components
 import Loader from '../components/loader';
+import PokemonCard from '../components/pokemon-card';
 
 // 3rd lib
 import gql from 'graphql-tag';
@@ -17,7 +18,6 @@ function PokemonList(props) {
     useEffect(() => {
         getPokemons(11);
     }, []);
-
 
     const getPokemons = (first) => {
         props.client.query({
@@ -39,24 +39,41 @@ function PokemonList(props) {
         query Pokemons($first: Int!) {
             pokemons(first: $first) {
                 id
+                number
                 name
+                image
+                classification
+                types
             }
         }
     `;
 
-    const goToPage = (url) => props.history.push(url)
+    const goToPage = (url) => {
+        props.history.push(url);
+    }
 
     return (
-        <Fragment>
+        <div className="container">
             <Loader visible={loader}></Loader>
 
-            PokemonList!
+            <h1>Pokemon List</h1>
+
             {pokemons.map(pokemon =>
-                <div key={pokemon.id} onClick={() => goToPage(`/pokemon/${pokemon.id}`)}>
-                    #{pokemon.id} - {pokemon.name}
+                <div key={pokemon.id}>
+                    <div className="col-xs-12 col-sm-4 col-md-4 col-lg-3 well-sm">
+                        <PokemonCard
+                            id={pokemon.id}
+                            number={pokemon.number}
+                            name={pokemon.name}
+                            image={pokemon.image}
+                            classification={pokemon.classification}
+                            types={pokemon.types}
+                            onClick={() => goToPage(`/pokemon/${pokemon.id}`)}
+                        />
+                    </div>
                 </div>
             )}
-        </Fragment>
+        </div>
     );
 }
 
