@@ -1,5 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
+// components
+import Loader from '../components/loader';
+
 // 3rd lib
 import gql from 'graphql-tag';
 import { ApolloConsumer } from '@apollo/react-hooks';
@@ -8,6 +11,7 @@ import { ApolloConsumer } from '@apollo/react-hooks';
 function PokemonList(props) {
     // component state: [key: setter] = useState(defaultValue);
     const [pokemons, setPokemons] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     // Similar to componentDidMount
     useEffect(() => {
@@ -16,13 +20,18 @@ function PokemonList(props) {
 
 
     const getPokemons = (first) => {
-        console.log('loading...');
         props.client.query({
             query: GET_POKEMONS,
             variables: {first: first}
         })
-        .then(data => {setPokemons(data.data.pokemons); console.log(data.data.pokemons);})
-        .catch(error => console.error(error));
+        .then(data => {
+            setLoader(false);
+            setPokemons(data.data.pokemons);
+        })
+        .catch(error => {
+            setLoader(false);
+            console.error(error);
+        });
     }
 
     // query fro graphql
@@ -39,6 +48,8 @@ function PokemonList(props) {
 
     return (
         <Fragment>
+            <Loader visible={loader}></Loader>
+
             PokemonList!
             {pokemons.map(pokemon =>
                 <div key={pokemon.id} onClick={() => goToPage(`/pokemon/${pokemon.id}`)}>

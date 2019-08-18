@@ -1,12 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
+// components
+import Loader from '../components/loader';
+
 // 3rd lib
 import gql from 'graphql-tag';
 import { ApolloConsumer } from '@apollo/react-hooks';
 
 function PokemonDetail(props) {
     // component state: [key: setter] = useState(defaultValue);
-    const [pokemon, setPokemon] = useState([]);
+    const [pokemon, setPokemon] = useState({});
+    const [loader, setLoader] = useState(true);
 
     // Similar to componentDidMount
     useEffect(() => {
@@ -14,13 +18,16 @@ function PokemonDetail(props) {
     }, []);
 
     const getPokemon = (id) => {
-        console.log('loading...');
         props.client.query({
             query: GET_POKEMON,
             variables: {id: id}
-        })
-        .then(data => {setPokemon(data.data.pokemon); console.log(data);})
-        .catch(error => console.error(error));
+        }).then(data => {
+            setLoader(false);
+            setPokemon(data.data.pokemon);
+        }).catch(error => {
+            setLoader(false);
+            console.error(error)
+        });
     }
 
     // query fro graphql
@@ -35,6 +42,8 @@ function PokemonDetail(props) {
 
     return (
         <Fragment>
+            <Loader visible={loader}></Loader>
+
             PokemonDetail!
             {pokemon &&
                 <div>
