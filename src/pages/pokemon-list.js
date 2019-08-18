@@ -55,8 +55,10 @@ function PokemonList(props) {
     return (
         <div className="container">
             <Loader visible={loader}></Loader>
-
-            <h1>Pokemon List</h1>
+            
+            <div className="col-xs-12">
+                <h1>Pokemon List</h1>
+            </div>
 
             {pokemons.map(pokemon =>
                 <div key={pokemon.id}>

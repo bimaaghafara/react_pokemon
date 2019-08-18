@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // components
 import Loader from '../components/loader';
+import PokemonProfile from '../components/pokemon-profile';
 
 // 3rd lib
 import gql from 'graphql-tag';
@@ -9,7 +10,7 @@ import { ApolloConsumer } from '@apollo/react-hooks';
 
 function PokemonDetail(props) {
     // component state: [key: setter] = useState(defaultValue);
-    const [pokemon, setPokemon] = useState({});
+    const [pokemon, setPokemon] = useState();
     const [loader, setLoader] = useState(true);
 
     // Similar to componentDidMount
@@ -35,22 +36,45 @@ function PokemonDetail(props) {
         query Pokemon($id: String!) {
             pokemon(id: $id) {
                 id
+                number
                 name
+                image
+                classification
+                types
+                maxCP
+                maxHP
+                resistant
+                weaknesses
             }
         }
     `;
 
     return (
-        <Fragment>
+        <div className="container">
             <Loader visible={loader}></Loader>
 
-            PokemonDetail!
-            {pokemon &&
-                <div>
-                    #{pokemon.id} {pokemon.name}
-                </div>
-            }
-        </Fragment>
+            <div className="col-xs-12">
+                <h1>Pokemon Detail</h1>
+            </div>
+
+            <div className="col-xs-12">
+                {pokemon &&
+                    <PokemonProfile
+                        id={pokemon.id}
+                        number={pokemon.number}
+                        name={pokemon.name}
+                        image={pokemon.image}
+                        classification={pokemon.classification}
+                        types={pokemon.types}
+                        maxCP={pokemon.maxCP}
+                        maxHP={pokemon.maxHP}
+                        resistant={pokemon.resistant}
+                        weaknesses={pokemon.weaknesses}
+                        onGoBack={() => props.history.goBack()}
+                    />
+                }
+            </div>
+        </div>
     );
 }
 

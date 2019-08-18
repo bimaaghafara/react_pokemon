@@ -3,7 +3,7 @@ import './pokemon-card.scss';
 
 function PokemonCard(props) {
     return (
-        <div className="pokemon-wrapper" onClick={props.onClick}>
+        <div className="pokemon-card-wrapper" onClick={props.onClick}>
             <div 
                 className="img-wrapper"
                 style={{backgroundImage: `url('${props.image}')`}}
