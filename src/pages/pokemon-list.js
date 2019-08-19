@@ -25,12 +25,22 @@ class PokemonList extends Component {
     };
 
     componentDidMount() {
-        // get pokemons for the first time
-        this.getPokemons(this.state.count);
+        // get pokemons from sessionStorage
+        const pokemons = JSON.parse(sessionStorage.getItem('pokemons'));
+
+        if (pokemons.length) {
+            this.setState({pokemons: pokemons})
+        } else {
+            // get pokemons for the first time
+            this.getPokemons(this.state.count);
+        }
         document.addEventListener('scroll', this.handleScroll);
     }
     
     componentWillUnmount() {
+        // set pokemons into sessionStorage
+        sessionStorage.setItem('pokemons', JSON.stringify(this.state.pokemons));
+
         document.removeEventListener('scroll', this.handleScroll);
     }
 
@@ -45,7 +55,7 @@ class PokemonList extends Component {
                 // reset nextPokemons after we add them, to prevent add more nextPokemons with same nextPokemons
                 await this.setState({nextPokemons: []})
 
-            } else if (!this.state.endOfCatalogue) {
+            } else if (!this.state.endOfCatalogue && this.state.fetchingNextPokemons) {
                 // when user isNearBottom but app isFetchingNextPokemons, app will show loader
                 // try to scroll down so fast into isNearBottom
                 // show loader here
