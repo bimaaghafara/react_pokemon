@@ -3,6 +3,7 @@ import React, {Component, useState, useEffect } from 'react';
 // components
 import Loader from '../components/loader';
 import PokemonCard from '../components/pokemon-card';
+import ButtonScroll from '../components/button-scroll';
 
 // 3rd lib
 import gql from 'graphql-tag';
@@ -138,12 +139,29 @@ class PokemonList extends Component {
         this.props.history.push(url);
     }
 
+    jumpTo = (count) => {
+        const pokemonCardHeight = 300;
+        let sumPokemonInOneRow;
+        if (window.innerWidth < 768) {
+            sumPokemonInOneRow = 1;
+        } else if (window.innerWidth < 1200) {
+            sumPokemonInOneRow = 3;
+        } else {
+            sumPokemonInOneRow = 4;
+        }
+        window.scrollBy(0, pokemonCardHeight*Math.floor(count/sumPokemonInOneRow));
+    }
+
     render() {
         const {loader, pokemons} = this.state;
     
         return (
             <div className="container pokemons-wrapper">
-                <Loader visible={loader}></Loader>
+                <Loader visible={loader} />
+                <ButtonScroll
+                    onClickUp={() => this.jumpTo(-10)}
+                    onClickDown={() => this.jumpTo(10)}
+                />
                 
                 <div className="col-xs-12">
                     <h1>Pokemon List</h1>

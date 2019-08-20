@@ -1,0 +1,29 @@
+.button-scroll {
+    .float{
+        &:hover {
+            opacity: 0.9;
+            border: 2px solid mediumspringgreen;
+        }
+        &.up {
+            bottom: 90px;
+        }
+        &.down {
+            bottom: 20px;
+        }
+        .glyphicon {
+            transform: translateX(-1px);
+        }
+        cursor: pointer;
+        z-index: 999;
+        font-size: 36px;
+        line-height: 70px;
+        position:fixed;
+        width:60px;
+        height:60px;
+        right: 20px;
+        background-color:#0C9;
+        color: #FFF;
+        border-radius:50px;
+        text-align:center;
+    }
+}
