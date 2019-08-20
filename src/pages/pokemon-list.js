@@ -26,12 +26,11 @@ class PokemonList extends Component {
     };
 
     componentDidMount() {
-        // get pokemons & count from sessionStorage
+        // get pokemons from sessionStorage
         const pokemons = JSON.parse(sessionStorage.getItem('pokemons'));
-        const count = JSON.parse(sessionStorage.getItem('count'));
 
         if (pokemons && pokemons.length) {
-            this.setState({pokemons: pokemons, count: count})
+            this.setState({pokemons: pokemons, count: pokemons.length+10})
         } else {
             // get pokemons for the first time
             this.getPokemons(this.state.count);
@@ -42,7 +41,6 @@ class PokemonList extends Component {
     componentWillUnmount() {
         // set pokemons into sessionStorage
         sessionStorage.setItem('pokemons', JSON.stringify(this.state.pokemons));
-        sessionStorage.setItem('count', JSON.stringify(this.state.count - 10));
 
         document.removeEventListener('scroll', this.handleScroll);
     }
