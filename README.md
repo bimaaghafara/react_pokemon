@@ -1,7 +1,7 @@
 # React Pokemon
 An app that you can bwrowse pokemons catalogue, select and click one pokemon to get more pokemon detail.
 
-<img src="https://cdn.jsdelivr.net/gh/bimaaghafara/react_pokemon@master/demo.gif" width="616" height="410" alt="" />
+<img src="https://cdn.jsdelivr.net/gh/bimaaghafara/react_pokemon@master/demo.gif" width="640" height="400" alt="" />
 
 ## Installing
 ```
