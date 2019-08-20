@@ -10,7 +10,7 @@ npm install
 
 ## How to run
 ```
-npm install
+npm start
 ```
 
 ## Built With
