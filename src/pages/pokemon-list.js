@@ -25,11 +25,12 @@ class PokemonList extends Component {
     };
 
     componentDidMount() {
-        // get pokemons from sessionStorage
+        // get pokemons & count from sessionStorage
         const pokemons = JSON.parse(sessionStorage.getItem('pokemons'));
+        const count = JSON.parse(sessionStorage.getItem('count'));
 
-        if (pokemons.length) {
-            this.setState({pokemons: pokemons})
+        if (pokemons && pokemons.length) {
+            this.setState({pokemons: pokemons, count: count})
         } else {
             // get pokemons for the first time
             this.getPokemons(this.state.count);
@@ -40,6 +41,7 @@ class PokemonList extends Component {
     componentWillUnmount() {
         // set pokemons into sessionStorage
         sessionStorage.setItem('pokemons', JSON.stringify(this.state.pokemons));
+        sessionStorage.setItem('count', JSON.stringify(this.state.count - 10));
 
         document.removeEventListener('scroll', this.handleScroll);
     }
@@ -105,7 +107,7 @@ class PokemonList extends Component {
                 fetchingNextPokemons: false,
                 nextPokemons: data.data.pokemons,
                 count: this.state.count+10,
-                endOfCatalogue: data.data.pokemons.length===this.state.pokemons.length? true: false
+                endOfCatalogue: data.data.pokemons.length && data.data.pokemons.length===this.state.pokemons.length? true: false
             });
 
             // scroll down & up window by 10px, to trigger handleScroll()
@@ -140,7 +142,7 @@ class PokemonList extends Component {
         const {loader, pokemons} = this.state;
     
         return (
-            <div className="container">
+            <div className="container pokemons-wrapper">
                 <Loader visible={loader}></Loader>
                 
                 <div className="col-xs-12">
